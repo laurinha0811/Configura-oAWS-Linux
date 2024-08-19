@@ -43,7 +43,6 @@
 4. Selecione o Elastic IP recém-criado e clique em **Actions** > **Associate Elastic IP address**.
 5. Escolha a instância EC2 para associar o Elastic IP e clique em **Associate**.
 
-
 ## Requisitos no Linux
 
 ### 1. Configurar o NFS Entregue
@@ -54,4 +53,14 @@
    sudo apt-get install nfs-kernel-server
 
 2. **Criar o diretório a ser compartilhado**:
+   ```bash
    sudo mkdir -p /mnt/nfs_share
+
+3. **Configurar o arquivo de exportação**:
+   ```bash
+   sudo nano /etc/exports
+Adicione a linha:
+   ```bash
+/mnt/nfs_share *(rw,sync,no_subtree_check)
+
+   
