@@ -59,10 +59,72 @@
 3. **Configurar o arquivo de exportação**:
    ```bash
    sudo nano /etc/exports
-3.1 **Adicione a linha**:
+   
+Adicione a seguinte linha:
    ```bash
    /mnt/nfs_share *(rw,sync,no_subtree_check)
+   ```
 
-1. **Instalar o NFS**:
+4. **Exportar o diretório**:
+   ```bash
+   sudo exportfs -a
+      ```
 
+5. **Iniciar o serviço NFS**:
+   ```bash
+   sudo systemct1 start nfs-kernel-server
+   sudo systemct1 enable nfs-kernel-server
+      ```
+
+### 2. Criar um diretório dentro dp Filrsystem do NFS com seu nome:
+1. **Montar o NFS**:
+   ```bash
+   sudo mount =t nfs <endereco-ip-nfs>:/mnt/nfs_share /mnt/nfs
+   ```bash
+2. **Criar o diretório com o seu nome**:
+   ```bash
+   mkdir -p /mnt/nfs/laura
+   ```
    
+### 3. Subir um Apache no servidor:
+1.**Instalar o Apache**:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install apache2
+   ```
+
+2. **Iniciar o Apache e habilitar a inicialização**:
+      ```bash
+   sudo systemct1 start apache2
+   sudo systemct1 enable apache2
+   ```
+      
+3. **Verifique o status do Apache**:
+      ```bash
+   sudo systemct1 status apache2
+   ```
+
+### 4. Criar um Scriptmque valide se o serviço esta online e envie o resultado da validação para o diretório NFS:
+1. **Criar o script de monitoramento**:
+      ```bash
+   nano /home/laura/scripts/check_service.sh
+   ```
+   Adicione o seguinte conteúdo:
+      ```bash
+# Variáveis
+SERVICE="apache2"
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+NFS_DIR="/mnt/nfs/laura"
+ONLINE_FILE="${NFS_DIR}/service_status_online.txt"
+OFFLINE_FILE="${NFS_DIR}/service_status_offline.txt"
+
+# Verifica se o serviço está online
+if systemctl is-active --quiet ${SERVICE}; then
+    echo "${TIMESTAMP} - ${SERVICE} - ONLINE - O serviço está funcionando corretamente." >> ${ONLINE_FILE}
+    rm -f ${OFFLINE_FILE}
+else
+    echo "${TIMESTAMP} - ${SERVICE} - OFFLINE - O serviço está fora do ar." >> ${OFFLINE_FILE}
+    rm -f ${ONLINE_FILE}
+fi
+   ```
+
