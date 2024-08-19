@@ -59,7 +59,7 @@
 3. **Configurar o arquivo de exportação**:
    ```bash
    sudo nano /etc/exports
-Adicione a linha:
+3.1 Adicione a linha:
    ```bash
 /mnt/nfs_share *(rw,sync,no_subtree_check)
 
