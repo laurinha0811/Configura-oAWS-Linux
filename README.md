@@ -127,7 +127,7 @@ Adicione a seguinte linha:
     rm -f ${ONLINE_FILE}
       fi
    ```
-2. **Dar permissão de execução ao script:
+2. **Dar permissão de execução ao script**:
       ```bash
       chmod +x /home/laura/scripts/check_service.sh
    ```
