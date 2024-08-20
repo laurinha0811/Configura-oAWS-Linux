@@ -129,16 +129,16 @@ Adicione a seguinte linha:
    ```
 2. **Dar permissão de execução ao script**:
       ```bash
-      chmod +x /home/laura/scripts/check_service.sh
+   chmod +x /home/laura/scripts/check_service.sh
    ```
 
-### Preparar a execução automatizada do script a cada 5 minutos:
+### 5. Preparar a execução automatizada do script a cada 5 minutos:
 1. **Editar o crontab**:
       ```bash
-      crontab -e
+   crontab -e
    ```
 
 2. **Exucutar a seguinte linha para executar o script a cada 5 minutos:
       ```bash
-      */5 * * * * /bin/bash /home/laura/scripts/check_service.sh
+   */5 * * * * /bin/bash /home/laura/scripts/check_service.sh
    ```
