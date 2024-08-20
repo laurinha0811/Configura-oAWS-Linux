@@ -111,20 +111,34 @@ Adicione a seguinte linha:
    ```
    Adicione o seguinte conteúdo:
       ```bash
-# Variáveis
-SERVICE="apache2"
-TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-NFS_DIR="/mnt/nfs/laura"
-ONLINE_FILE="${NFS_DIR}/service_status_online.txt"
-OFFLINE_FILE="${NFS_DIR}/service_status_offline.txt"
+   # Variáveis
+      SERVICE:"apache2"
+      TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+      NFS_DIR="/mnt/nfs/laura"
+      ONLINE_FILE="${NFS_DIR}/service_status_online.txt"
+      OFFLINE_FILE="${NFS_DIR}/service_status_offline.txt"
 
-# Verifica se o serviço está online
-if systemctl is-active --quiet ${SERVICE}; then
-    echo "${TIMESTAMP} - ${SERVICE} - ONLINE - O serviço está funcionando corretamente." >> ${ONLINE_FILE}
+   # Verifica se o serviço está online
+      if systemctl is-active --quiet ${SERVICE}; then
+       echo "${TIMESTAMP} - ${SERVICE} - ONLINE - O serviço está funcionando corretamente." >> ${ONLINE_FILE}
     rm -f ${OFFLINE_FILE}
-else
-    echo "${TIMESTAMP} - ${SERVICE} - OFFLINE - O serviço está fora do ar." >> ${OFFLINE_FILE}
+      else
+       echo "${TIMESTAMP} - ${SERVICE} - OFFLINE - O serviço está fora do ar." >> ${OFFLINE_FILE}
     rm -f ${ONLINE_FILE}
-fi
+      fi
+   ```
+2. **Dar permissão de execução ao script:
+      ```bash
+      chmod +x /home/laura/scripts/check_service.sh
    ```
 
+### Preparar a execução automatizada do script a cada 5 minutos:
+1. **Editar o crontab**:
+      ```bash
+      crontab -e
+   ```
+
+2. **Exucutar a seguinte linha para executar o script a cada 5 minutos:
+      ```bash
+      */5 * * * * /bin/bash /home/laura/scripts/check_service.sh
+   ```
